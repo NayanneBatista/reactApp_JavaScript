@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import challenges from '../../challenges.json';
 
 interface Challenge {
@@ -6,7 +7,6 @@ interface Challenge {
     description: string;
     amount: number;
 }
-
 
 interface ChallengesContextData {
     level: number;
@@ -42,6 +42,13 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     
     
     // useEffect com segundo parâmetro como um array vazio significa que essa função passada será executada uma única vez assim que esse componente for carregado na tela.
+
+
+    useEffect( () => {
+        Cookies.set('level', String(level));
+        Cookies.set('currentExperience', String(currentExperience));
+        Cookies.set('challengesCompleted', String(challengesCompleted));
+    }, [level, currentExperience, challengesCompleted]);
 
     function levelUp() {
         setLevel(level + 1);
@@ -84,7 +91,6 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         setActiveChallenge(null);
         setChallengesCompleted(challengesCompleted + 1)
     }
-
 
     return(
         <ChallengesContext.Provider 
