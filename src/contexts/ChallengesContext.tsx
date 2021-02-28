@@ -19,6 +19,7 @@ interface ChallengesContextData {
     startNewChallenge: () => void;
     resetChallenge: () => void;
     completeChallenge: () => void;
+    closeLevelUpModal: () => void;
 }
 
 interface ChallengesProviderProps {
@@ -54,6 +55,11 @@ export function ChallengesProvider({ children,  ...rest}: ChallengesProviderProp
         Cookies.set('currentExperience', String(currentExperience));
         Cookies.set('challengesCompleted', String(challengesCompleted));
     }, [level, currentExperience, challengesCompleted]);
+
+
+    function closeLevelUpModal() {
+        setIsLevelUpModalOpen(false)
+    }
 
     function levelUp() {
         setLevel(level + 1);
@@ -110,6 +116,7 @@ export function ChallengesProvider({ children,  ...rest}: ChallengesProviderProp
                 resetChallenge,
                 activeChallenge,
                 completeChallenge,
+                closeLevelUpModal,
             }}
         >
             { children }
